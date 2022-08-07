@@ -48,6 +48,7 @@ export class SpellChecker {
       this.encoder.encode(affixPath),
       this.encoder.encode(dictionaryPath),
     );
+    // https://discord.com/channels/684898665143206084/956626010248478720/1005488431046086696
     new FinalizationRegistry((value: bigint) =>
       dl.symbols.Hunspell_destroy(value)
     ).register(this, this.instance);
