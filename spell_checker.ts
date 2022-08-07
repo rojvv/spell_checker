@@ -15,11 +15,13 @@ const dl = Deno.dlopen("/usr/lib/libhunspell-1.7.so", {
   },
 });
 
+// https://discord.com/channels/684898665143206084/956626010248478720/1005539135899054080
 function getCStrings(view: Deno.UnsafePointerView, length: number) {
   const pointers = [...new BigUint64Array(view.getArrayBuffer(length * 8))];
   return pointers.map((v) => new Deno.UnsafePointerView(v).getCString());
 }
 
+// https://discord.com/channels/684898665143206084/956626010248478720/1005504203709493338
 class PointerContainer {
   constructor(private arr = new BigUint64Array(1)) {
   }
