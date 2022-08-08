@@ -42,7 +42,7 @@ serve(async (req, connInfo) => {
         for (const part of parts) {
           const test = /^[A-z]*$/.test(part);
           const note = test ? undefined : "ignored";
-          const correct = test ? true : checker.check(part);
+          const correct = test ? checker.check(part) : true;
           result.push([part, { note, correct }]);
         }
         const end = Date.now();
