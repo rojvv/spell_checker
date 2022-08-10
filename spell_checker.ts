@@ -44,10 +44,10 @@ export class SpellChecker {
   }();
 
   constructor(affixPath: string, dictionaryPath: string) {
-    this.instance = dl.symbols.Hunspell_create(
+    this.instance = BigInt(dl.symbols.Hunspell_create(
       this.encoder.encode(affixPath),
       this.encoder.encode(dictionaryPath),
-    );
+    ));
     // https://discord.com/channels/684898665143206084/956626010248478720/1005488431046086696
     new FinalizationRegistry((value: bigint) =>
       dl.symbols.Hunspell_destroy(value)
