@@ -1,19 +1,24 @@
-const dl = Deno.dlopen("/usr/lib/libhunspell-1.7.so", {
-  "Hunspell_analyze": {
-    parameters: ["pointer", "pointer", "buffer"],
-    result: "i32",
+const dl = Deno.dlopen(
+  Deno.env.get("LIBHUNSPELL") ?? Deno.build.os == "darwin"
+    ? "libhunspell-1.7.dylib"
+    : "libhunspell-1.7.so",
+  {
+    "Hunspell_analyze": {
+      parameters: ["pointer", "pointer", "buffer"],
+      result: "i32",
+    },
+    "Hunspell_create": { parameters: ["buffer", "buffer"], result: "pointer" },
+    "Hunspell_destroy": {
+      parameters: ["pointer"],
+      result: "void",
+    },
+    "Hunspell_spell": { parameters: ["pointer", "buffer"], result: "i32" },
+    "Hunspell_suggest": {
+      parameters: ["pointer", "pointer", "buffer"],
+      result: "i32",
+    },
   },
-  "Hunspell_create": { parameters: ["buffer", "buffer"], result: "pointer" },
-  "Hunspell_destroy": {
-    parameters: ["pointer"],
-    result: "void",
-  },
-  "Hunspell_spell": { parameters: ["pointer", "buffer"], result: "i32" },
-  "Hunspell_suggest": {
-    parameters: ["pointer", "pointer", "buffer"],
-    result: "i32",
-  },
-});
+);
 
 // https://discord.com/channels/684898665143206084/956626010248478720/1005539135899054080
 function getCStrings(view: Deno.UnsafePointerView, length: number) {

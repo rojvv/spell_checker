@@ -1,0 +1,6 @@
+services:
+  server:
+    build: .
+    restart: unless-stopped
+    ports:
+      - ${PORT:-3000}:3000
